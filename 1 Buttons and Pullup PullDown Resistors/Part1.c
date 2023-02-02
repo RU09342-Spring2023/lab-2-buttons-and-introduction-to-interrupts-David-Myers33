@@ -29,6 +29,8 @@ int main(void)
     PM5CTL0 &= ~LOCKLPM5;                   // Disable the GPIO power-on default high-impedance mode
                                             // to activate previously configured port settings
 
+    P1OUT &= ~BIT0;                     //initialize red led as off
+    P6OUT &= ~BIT6;                     //initialize green led as off
 
     while(1)
     {
