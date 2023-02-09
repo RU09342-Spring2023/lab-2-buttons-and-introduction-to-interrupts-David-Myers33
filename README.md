@@ -51,3 +51,17 @@ while(1)
 
 ## Submission
 There is a sample file in this folder you will need to import into your Code Composer and work on. You will need to submit that file, documented well, and a README.md file (you can replace this one) with the documentation that tells someone about what the code is, what it does, how it works etc. For an audience for your README, imagine you at the beginning of the lab, looking for code which does, well, this. 
+
+LAB REPORT
+
+The goal of this lab was to develop an occupancy sensor that has three states. ARMED, WARNING, and ALERT. For my code, I decided to use polling instend of interrupts. It starts with the watchdog timer being stopped, followed by intiallization of P1.0 and P6.6. This intiallization will configure the LED registers to be clear and set them as outputs. Additionally, P4.1 and P2.3 are configured here as well, both enabled as pull up resistors. P4.1 acts as our "sensor" and P2.3 is the reset button. Finally, I have a global variable totatltime, set as 0. This will ensure that my timer always starts at 0 at boot up.
+
+This brings us to the while(1) loop. Here, the goal is to have the system constantly check for changes in P4.1 and it will make a decision based on P4.1's status:
+
+-The first check is an if statement that checks if P4.1 is NOT pressed and if the totaltime variable is less than 10 seconds. If this condition is met, P6.6, the green LED, will blink every 3 seconds and P1.0, the red LED, will stay turned off. This indictates the ARMED state.
+
+-The second check is another if statement. This one checks if P4.1 IS pressed and if totatltime is less than 10 seconds. If this condition is met, the red LED will blink every 5ms, and the green LED will stay turned off. This is only true if the P4.1 button is constantly held down. if it is released within 10 seconds, it will revert back to the ARMED state. Within this if statement as well, there is a counter, totaltime=totaltime+1 this will update the totaltime variable to however long the button was held. This indicates the WARNING state, and will change to ALERT when 10 seconds is reached.
+
+-The third check is also an if statement. This one simply checks the value of totaltime. If totaltime equals 10 seconds, (or 0x14 in my case) the red LED will stop blinking and stay solid red, even if the P4.1 button is released after the 10 seconds. This indicates the ALERT state.
+
+-The final check is another if statement. This one checks to see if P2.3, the reset button, is pressed. If this condition is met, totaltime is reset to 0. This will clear the timer and as a result, the system will return back to the armed state. This is the only way to clear the ALERT state.
