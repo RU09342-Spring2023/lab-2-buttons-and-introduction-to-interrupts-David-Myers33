@@ -52,7 +52,7 @@ while(1)
 ## Submission
 There is a sample file in this folder you will need to import into your Code Composer and work on. You will need to submit that file, documented well, and a README.md file (you can replace this one) with the documentation that tells someone about what the code is, what it does, how it works etc. For an audience for your README, imagine you at the beginning of the lab, looking for code which does, well, this. 
 
-LAB REPORT
+**LAB REPORT
 
 The goal of this lab was to develop an occupancy sensor that has three states. ARMED, WARNING, and ALERT. For my code, I decided to use polling instend of interrupts. It starts with the watchdog timer being stopped, followed by intiallization of P1.0 and P6.6. This intiallization will configure the LED registers to be clear and set them as outputs. Additionally, P4.1 and P2.3 are configured here as well, both enabled as pull up resistors. P4.1 acts as our "sensor" and P2.3 is the reset button. Finally, I have a global variable totatltime, set as 0. This will ensure that my timer always starts at 0 at boot up.
 
